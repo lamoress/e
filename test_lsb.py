@@ -1,7 +1,7 @@
 import unittest
 from PIL import Image
 import os
-from lsb import encode_lsb, decode_lsb, psnr  # Замените `lsb` на имя вашего скрипта
+from lsb import encode_lsb, decode_lsb, psnr  # Убедитесь, что модуль lsb.py находится в корне репозитория
 
 class TestSteganography(unittest.TestCase):
 
