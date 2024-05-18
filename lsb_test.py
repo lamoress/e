@@ -12,7 +12,7 @@ class TestSteganography(unittest.TestCase):
         self.decoded_file_path = "decoded_file.txt"
 
         # Создание тестового секретного файла
-        with open(self.secret_file_path, 'w') as f:
+        with open(self.secret_file_path, 'w', encoding='utf-8') as f:
             f.write("Secret Message")
 
     def tearDown(self):
@@ -24,7 +24,8 @@ class TestSteganography(unittest.TestCase):
                 pass
         if os.path.exists(self.decoded_file_path):
             os.remove(self.decoded_file_path)
-        os.remove(self.secret_file_path)
+        if os.path.exists(self.secret_file_path):
+            os.remove(self.secret_file_path)
 
     def test_encode_lsb(self):
         result = encode_lsb(self.original_image_path, self.secret_file_path)
