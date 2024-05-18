@@ -21,6 +21,10 @@ jobs:
         # Если у вас есть файл requirements.txt, раскомментируйте следующую строку
         # pip install -r requirements.txt
 
+    - name: List files for debugging
+      run: |
+        dir /s /b
+
     - name: Run tests
       run: |
-        python -m unittest discover -s . -p "lsb-test.py"
+        python -m unittest lsb_test.py
