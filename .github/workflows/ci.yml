@@ -27,4 +27,4 @@ jobs:
 
     - name: Run tests
       run: |
-        python -m unittest lsb_test.TestSteganography
+        python -m unittest discover -s . -p "lsb_test.py"
