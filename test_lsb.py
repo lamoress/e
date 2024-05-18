@@ -1,9 +1,7 @@
 import unittest
 from PIL import Image
 import os
-import gc
-from lsb import encode_lsb, decode_lsb, psnr  # Замените `your_script_name` на имя вашего скрипта
-
+from lsb import encode_lsb, decode_lsb, psnr  # Замените `lsb` на имя вашего скрипта
 
 class TestSteganography(unittest.TestCase):
 
@@ -13,10 +11,12 @@ class TestSteganography(unittest.TestCase):
         self.encoded_image_path = "encoded_image.bmp"
         self.decoded_file_path = "decoded_file.txt"
 
+        # Создание тестового секретного файла
         with open(self.secret_file_path, 'w') as f:
             f.write("Secret Message")
 
     def tearDown(self):
+        # Явно закрываем все изображения перед удалением
         if os.path.exists(self.encoded_image_path):
             try:
                 os.remove(self.encoded_image_path)
@@ -25,7 +25,6 @@ class TestSteganography(unittest.TestCase):
         if os.path.exists(self.decoded_file_path):
             os.remove(self.decoded_file_path)
         os.remove(self.secret_file_path)
-        gc.collect()
 
     def test_encode_lsb(self):
         result = encode_lsb(self.original_image_path, self.secret_file_path)
@@ -38,7 +37,7 @@ class TestSteganography(unittest.TestCase):
         result = decode_lsb(self.encoded_image_path)
         self.assertEqual(result, "Файл успешно извлечен.")
         self.assertTrue(os.path.exists(self.decoded_file_path))
-
+        
         with open(self.secret_file_path, 'rb') as original, open(self.decoded_file_path, 'rb') as decoded:
             self.assertEqual(original.read(), decoded.read())
 
@@ -51,7 +50,6 @@ class TestSteganography(unittest.TestCase):
         self.assertTrue(psnr_value > 30)  # Обычно PSNR выше 30 считается хорошим
         original_image.close()
         encoded_image.close()
-
 
 if __name__ == '__main__':
     unittest.main()
