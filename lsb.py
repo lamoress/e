@@ -81,27 +81,22 @@ def decode_lsb(image_path):
         file.write(file_data)
     return "Файл успешно извлечен."
 
-original_image_path = "1.bmp"
-secret_file_path = "secret.txt"
+if __name__ == '__main__':
+    original_image_path = "1.bmp"
+    secret_file_path = "secret.txt"
 
+    if not os.path.exists(original_image_path):
+        print(f"Ошибка: Файл изображения '{original_image_path}' не существует.")
+    elif not os.path.exists(secret_file_path):
+        print(f"Ошибка: Секретный файл '{secret_file_path}' не существует.")
+    else:
+        original_image = Image.open(original_image_path)
 
-if not os.path.exists(original_image_path):
-    print(f"Ошибка: Файл изображения '{original_image_path}' не существует.")
-elif not os.path.exists(secret_file_path):
-    print(f"Ошибка: Секретный файл '{secret_file_path}' не существует.")
-else:
-    original_image = Image.open(original_image_path)
+        encode_result = encode_lsb(original_image_path, secret_file_path)
+        print(encode_result)
 
-    encode_result = encode_lsb(original_image_path, secret_file_path)
-    print(encode_result)
-
-
-    decode_result = decode_lsb("encoded_image.bmp")
-    print(decode_result)
-    encoded_image = Image.open("encoded_image.bmp")
-    psnr_value = psnr(original_image, encoded_image)
-    print("PSNR между оригинальным и закодированным изображением:", psnr_value)
-
-    encoded_image = Image.open("encoded_image.bmp")
-
-
+        decode_result = decode_lsb("encoded_image.bmp")
+        print(decode_result)
+        encoded_image = Image.open("encoded_image.bmp")
+        psnr_value = psnr(original_image, encoded_image)
+        print("PSNR между оригинальным и закодированным изображением:", psnr_value)
